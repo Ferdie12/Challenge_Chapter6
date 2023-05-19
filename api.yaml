@@ -1,0 +1,724 @@
+openapi: 3.0.0
+info:
+  title: Application Manufaktur
+  description: |-
+    Aplikasi Manufaktur Sederhana
+  contact:
+    email: maulanaferdie1@gmail.com
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Test local computer
+tags:
+  - name: Suppliers
+    description: Daftar API Suppliers
+  - name: Products
+    description: Daftar API Products
+  - name: Components
+    description: Daftar API Components
+components:
+  schemas:
+    suppliersResponse:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: succes
+        data:
+          type: object
+          properties:
+            name:
+              type: string
+              example: ferdie
+            email:
+              type: string
+              example: ferdie@gmail.com
+            address:
+              type: string
+              example: pekanbaru
+    productsResponse:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: succes
+        data:
+          type: object
+          properties:
+            name:
+              type: string
+              example: samsung
+            quantity:
+              type: integer
+              example: 20
+    componentsResponse:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: succes
+        data:
+          type: object
+          properties:
+            name:
+              type: string
+              example: lcd samsung
+            description:
+              type: string
+              example: ini adalah lcd samsung kualitas terbaik
+paths:
+  /suppliers:
+    post:
+      tags:
+        - Suppliers
+      summary: Mendaftarkan Suppliers Baru
+      description: API ini adalah untuk Mendaftarkan Suppliers Baru
+      operationId: post-create-suppliers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: ferdie
+                email:
+                  type: string
+                  example: ferdie@gmail.com
+                address:
+                  type: string
+                  example: pekanbaru
+      responses:
+        "201":
+          description: Success Create
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/suppliersResponse'
+        "400":
+          description: Error from user
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        type: boolean
+                      message:
+                        type: string
+                  - type: object
+                    properties:
+                      status:
+                        type: boolean
+                      message:
+                        type: string
+              examples:
+                duplicated-account:
+                  summary: If email already created
+                  value:
+                    status: false
+                    message: email is already created!
+                bad-request:
+                  summary: If required data is not provided
+                  value:
+                    status: false
+                    message: name, email and address is required!
+    get:
+      tags:
+        - Suppliers
+      summary: Mendapatkan semua data suppliers
+      description: API ini adalah untuk Mendapatkan semua data suppliers
+      operationId: get-getAll-suppliers
+      responses:
+        "201":
+          description: Success Get All
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: succes
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: ferdie
+                        email:
+                          type: string
+                          example: ferdie@gmail.com
+                        password:
+                          type: string
+                          example: ferdie123
+                        address:
+                          type: string
+                          example: pekanbaru
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+  /suppliers/{id_supplier}:
+    get:
+      tags:
+        - Suppliers
+      summary: Mendapatkan data suppliers dengan id
+      description: API ini adalah untuk Mendapatkan data suppliers dengan id
+      operationId: get-getById-suppliers
+      parameters:
+        - in: path
+          name: id_supplier
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Success Get By id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/suppliersResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: cannot get supplier with supplier id
+    put:
+      tags:
+        - Suppliers
+      summary: Mengupdate data suppliers
+      description: API ini adalah untuk Mengupdate data suppliers
+      operationId: put-update-suppliers
+      parameters:
+      - in: path
+        name: id_supplier
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: ferdie
+                address:
+                  type: string
+                  example: pekanbaru
+      responses:
+        '200':
+          description: Succes Updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: updated succes
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: cannot update supplier with supplier id
+    delete:
+      tags:
+        - Suppliers
+      summary: Mengupdate data suppliers
+      description: API ini adalah untuk Mengupdate data suppliers
+      operationId: delete-destroy-suppliers
+      parameters:
+      - in: path
+        name: id_supplier
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Succes Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: deleted succes
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: cannot delete supplier with supplier id
+
+  /products:
+    post:
+      tags:
+        - Products
+      summary: Mendaftarkan products Baru
+      description: API ini adalah untuk Mendaftarkan products Baru
+      operationId: post-create-products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: samsung
+                quantity:
+                  type: integer
+                  example: 20
+      responses:
+        "201":
+          description: Success Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/productsResponse'
+        "400":
+          description: Error from user
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        type: boolean
+                      message:
+                        type: string
+                  - type: object
+                    properties:
+                      status:
+                        type: boolean
+                      message:
+                        type: string
+              examples:
+                duplicated-account:
+                  summary: If product already created
+                  value:
+                    status: false
+                    message: product is already created!
+                bad-request:
+                  summary: If required data is not provided
+                  value:
+                    status: false
+                    message: name or quantity is required!
+    get:
+      tags:
+        - Products
+      summary: Mendapatkan semua data products
+      description: API ini adalah untuk Mendapatkan semua data products
+      operationId: get-getAll-products
+      responses:
+        "201":
+          description: Success Get All
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: succes
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: samsung
+                        quantity:
+                          type: integer
+                          example: 20
+  /products/{id_product}:
+    get:
+      tags:
+        - Products
+      summary: Mendapatkan data products dengan id
+      description: API ini adalah untuk Mendapatkan data products dengan id
+      operationId: get-getById-products
+      parameters:
+        - in: path
+          name: id_product
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Success Register
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/productsResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: cannot get product with product id
+    put:
+      tags:
+        - Products
+      summary: Mengupdate data products
+      description: API ini adalah untuk Mengupdate data products
+      operationId: put-update-products
+      parameters:
+      - in: path
+        name: id_product
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  example: 30
+      responses:
+        '200':
+          description: Succes Updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: updated succes
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: cannot update product with product id
+    delete:
+      tags:
+        - Products
+      summary: Mengupdate data products
+      description: API ini adalah untuk Mengupdate data products
+      operationId: delete-destroy-products
+      parameters:
+      - in: path
+        name: id_product
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Succes Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: deleted succes
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: cannot delete product with product id
+  /components:
+    post:
+      tags:
+        - Components
+      summary: Mendaftarkan components Baru
+      description: API ini adalah untuk Mendaftarkan components Baru
+      operationId: post-create-components
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: lcd samsung
+                description:
+                  type: string
+                  example: ini adalah lcd samsung kualitas terbaik
+      responses:
+        "201":
+          description: Success Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/componentsResponse'
+        "400":
+          description: Error from user
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        type: boolean
+                      message:
+                        type: string
+                  - type: object
+                    properties:
+                      status:
+                        type: boolean
+                      message:
+                        type: string
+              examples:
+                duplicated-account:
+                  summary: If component already created
+                  value:
+                    status: false
+                    message: component is already created!
+                bad-request:
+                  summary: If required data is not provided
+                  value:
+                    status: false
+                    message: name or description is required!
+    get:
+      tags:
+        - Components
+      summary: Mendapatkan semua data components
+      description: API ini adalah untuk Mendapatkan semua data components
+      operationId: get-getAll-components
+      responses:
+        "201":
+          description: Success Get All
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: succes
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: lcd samsung
+                        description:
+                          type: string
+                          example: ini adalah lcd samsung kualitas terbaik
+  /components/{id_component}:
+    get:
+      tags:
+        - Components
+      summary: Mendapatkan data components dengan id
+      description: API ini adalah untuk Mendapatkan data components dengan id
+      operationId: get-getById-components
+      parameters:
+        - in: path
+          name: id_component
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Success Register
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/componentsResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: cannot get component with component id
+    put:
+      tags:
+        - Components
+      summary: Mengupdate data components
+      description: API ini adalah untuk Mengupdate data components
+      operationId: put-update-components
+      parameters:
+      - in: path
+        name: id_component
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  example: ini adalah lcd samsung kualitas super
+      responses:
+        '200':
+          description: Succes Updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: updated succes
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: cannot update component with component id
+    delete:
+      tags:
+        - Components
+      summary: Mengupdate data components
+      description: API ini adalah untuk Mengupdate data components
+      operationId: delete-destroy-components
+      parameters:
+      - in: path
+        name: id_component
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Succes Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: deleted succes
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: cannot delete component with component id
