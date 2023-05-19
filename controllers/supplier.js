@@ -49,7 +49,7 @@ create : async (req,res,next) => {
         if(!name || !email || !address){
             return res.status(400).json({
                 status: false,
-                message: "name, email and is required!"
+                message: "name and email is required!"
             })
         }
 

@@ -19,7 +19,7 @@ app.use(router);
 app.use((req,res,next) => {
     try {
         return res.status(404).json({
-            message: "salah link cuy"
+            message: "salah link cuy!"
         })
     } catch (err) {
         next(err)
