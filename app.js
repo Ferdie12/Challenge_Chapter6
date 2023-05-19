@@ -9,7 +9,7 @@ const file = fs.readFileSync('./api.yaml', 'utf-8');
 const fileku = yaml.parse(file);
 
 const app = express();
-const port = 3000;
+const port = procces.env || 3000;
 
 app.use('/api-docs', ui.serve, ui.setup(fileku))
 app.use(morgan('dev'));
