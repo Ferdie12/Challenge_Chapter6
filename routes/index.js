@@ -11,14 +11,14 @@ router.use(routerSupplier);
 
 router.get('/', (req,res) => {
     res.status(200).json({
-        message: "welcome to Challenge ferdie in develop"
+        message: "welcome to Challenge ferdie in production"
     })
 })
 
 router.get('/error', (req,res) => {
     res.status(200).json({
         status: false,
-        message: "percobaan debugging in develop",
+        message: "percobaan debugging in production",
         data : data
     })
 })
