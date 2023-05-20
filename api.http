@@ -2,23 +2,22 @@
 ### API SUPPLIERS
 
 ### CREATE SUPPLIER
-POST http://localhost:3000/suppliers
+POST http://localhost:5000/suppliers
 Content-Type: application/json
 
 {
     "name" : "amat",
-    "email" : "amat@gmail.com",
     "address" : "pekanbaru"
 }
 
 ### GET ALL SUPPLIER
-GET  http://localhost:3000/suppliers
+GET  http://localhost:5000/suppliers
 
 ### GET BY ID SUPPLIER
-GET  http://localhost:3000/suppliers/2
+GET  http://localhost:5000/suppliers/1
 
 ### UPDATE SUPPLIER
-PUT  http://localhost:3000/suppliers/1
+PUT  http://localhost:5000/suppliers/1
 Content-Type: application/json
 
 {
@@ -26,7 +25,7 @@ Content-Type: application/json
 }
 
 ### DELETE SUPPLIER
-DELETE http://localhost:3000/suppliers/2
+DELETE http://localhost:5000/suppliers/2
 Content-Type: application/json
 
 
@@ -34,22 +33,22 @@ Content-Type: application/json
 ### API PRODUCTS
 
 ### CREATE PRODUCT
-POST http://localhost:3000/products
+POST http://localhost:5000/products
 Content-Type: application/json
 
 {
-    "name" : "samsung",
+    "name" : "samsungm",
     "quantity" : 20
 }
 
 ### GET ALL PRODUCT
-GET  http://localhost:3000/products
+GET  http://localhost:5000/products
 
 ### GET PRODUCT BY ID
-GET  http://localhost:3000/products/3
+GET  http://localhost:5000/products/1
 
 ### UPDATE PRODUCT
-PUT  http://localhost:3000/products/1
+PUT  http://localhost:5000/products/1
 Content-Type: application/json
 
 {
@@ -57,7 +56,7 @@ Content-Type: application/json
 }
 
 ### DELETE PRODUCT
-DELETE http://localhost:3000/products/2
+DELETE http://localhost:5000/products/1
 Content-Type: application/json
 
 
@@ -65,22 +64,22 @@ Content-Type: application/json
 ### API COMPONENTS
 
 ### CREATE COMPONENT
-POST http://localhost:3000/components
+POST http://localhost:5000/components
 Content-Type: application/json
 
 {
     "name" : "lcd",
-    "description" : "ini adalah lcdku"
+    "description" : "ini adalah lcdmu"
 }
 
 ### GET ALL COMPONENT
-GET  http://localhost:3000/components
+GET  http://localhost:5000/components
 
 ### GET COMPONENT BY ID
-GET  http://localhost:3000/components/4
+GET  http://localhost:5000/components/1
 
 ### UPDATE COMPONENT
-PUT  http://localhost:3000/components/1
+PUT  http://localhost:5000/components/1
 Content-Type: application/json
 
 {
@@ -88,5 +87,5 @@ Content-Type: application/json
 }
 
 ### DELETE COMPONENTD
-DELETE http://localhost:3000/components/1
+DELETE http://localhost:5000/components/1
 Content-Type: application/json
