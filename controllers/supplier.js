@@ -1,7 +1,7 @@
 const {supplier} = require("../models")
 module.exports = {
 
-    getAll : async (req,res,next) => {
+    getAll : async (req,res) => {
         try {
             const suppliers = await supplier.findAll({
                 attributes: {
@@ -16,11 +16,11 @@ module.exports = {
                 data : suppliers
             })
         } catch (err) {
-            next(err);
+            throw err;
         }
     },
     
-    getById : async (req,res,next) => {
+    getById : async (req,res) => {
         try {
             const supplier_id = req.params.id_supplier
             const suppliers = await supplier.findOne({
@@ -45,11 +45,11 @@ module.exports = {
             });
     
         } catch (err) {
-            next(err)
+            throw err
         }
     },
     
-    create : async (req,res,next) => {
+    create : async (req,res) => {
         try {
             const {name, address} = req.body;
     
@@ -80,11 +80,11 @@ module.exports = {
                 }
             })
         } catch (err) {
-            next(err);
+            throw err;
         }
     },
     
-    update : async (req,res,next) => {
+    update : async (req,res) => {
         try {
             const supplier_id = req.params.id_supplier
         
@@ -101,11 +101,11 @@ module.exports = {
                 message: "updated succes"
             });
         } catch (err) {
-            next(err)
+            throw err
         }
     },
     
-    destroy : async (req,res,next) => {
+    destroy : async (req,res) => {
         try {
             const supplier_id = req.params.id_supplier
         
@@ -122,7 +122,7 @@ module.exports = {
                 message: "deleted succes",
             });
         } catch (err) {
-            next(err)
+            throw err
         }
     }
     

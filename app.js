@@ -1,4 +1,5 @@
 const express = require('express');
+const Sentry = require('@sentry/node');
 const morgan = require('morgan');
 const ui = require("swagger-ui-express");
 const yaml = require("yaml");
@@ -10,10 +11,24 @@ const fileku = yaml.parse(file);
 
 const app = express();
 
+const {DSN, ENVIRONMENT} = process.env ;
+
+Sentry.init({
+    environment: ENVIRONMENT,
+    dsn: DSN,
+    integrations: [
+      new Sentry.Integrations.Http({ tracing: true }),
+      new Sentry.Integrations.Express({ app }),
+      ...Sentry.autoDiscoverNodePerformanceMonitoringIntegrations(),
+    ],
+    tracesSampleRate: 1.0,
+  });
 
 app.use('/api-docs', ui.serve, ui.setup(fileku))
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
 app.use(router);
 
 app.use((req,res,next) => {
@@ -25,6 +40,8 @@ app.use((req,res,next) => {
         next(err)
     }
 })
+
+app.use(Sentry.Handlers.errorHandler());
 
 app.use((err,req,res,next) => {
     return res.status(500).json({

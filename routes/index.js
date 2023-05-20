@@ -8,9 +8,18 @@ const router = express.Router();
 router.use(routerComponent);
 router.use(routerProduct);
 router.use(routerSupplier);
+
 router.get('/', (req,res) => {
     res.status(200).json({
-        message: "welcome to express"
+        message: "welcome to Challenge ferdie in develop"
+    })
+})
+
+router.get('/error', (req,res) => {
+    res.status(200).json({
+        status: false,
+        message: "percobaan debugging in develop",
+        data : data
     })
 })
 

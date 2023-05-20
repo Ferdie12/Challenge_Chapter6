@@ -15,7 +15,6 @@ describe('TEST POST /products endpoint', () => {
             .post('/products')
             .send(product)
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(201);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
@@ -36,7 +35,6 @@ describe('TEST POST /products endpoint', () => {
             .post('/products')
             .send({})
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(400);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
@@ -50,7 +48,6 @@ describe('TEST POST /products endpoint', () => {
             .post('/products')
             .send(product)
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(400);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
@@ -67,7 +64,6 @@ describe('TEST GET All /products endpoint', () => {
         return supertest(app)
             .get('/products')
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(200);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
@@ -93,7 +89,6 @@ describe('TEST GET BY ID /products/:id_product endpoint', () => {
         return supertest(app)
             .get(`/products/` + product.id)
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(200);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
@@ -111,7 +106,6 @@ describe('TEST GET BY ID /products/:id_product endpoint', () => {
         return supertest(app)
             .get('/products/900')
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(404);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
@@ -129,7 +123,6 @@ describe('TEST UPDATE /products/:id_product endpoint', () => {
             .put(`/products/` + product.id)
             .send({ quantity : 35})
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(200);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
@@ -143,7 +136,6 @@ describe('TEST UPDATE /products/:id_product endpoint', () => {
         return supertest(app)
             .put('/products/900')
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(404);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
@@ -160,7 +152,6 @@ describe('TEST DELETE /products/:id_product endpoint', () => {
         return supertest(app)
             .delete(`/products/` + product.id)
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(200);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
@@ -174,7 +165,6 @@ describe('TEST DELETE /products/:id_product endpoint', () => {
         return supertest(app)
             .delete('/products/900')
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(404);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');

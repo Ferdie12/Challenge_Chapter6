@@ -15,7 +15,6 @@ describe('TEST POST /components endpoint', () => {
             .post('/components')
             .send(component)
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(201);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
@@ -36,7 +35,6 @@ describe('TEST POST /components endpoint', () => {
             .post('/components')
             .send({})
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(400);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
@@ -50,7 +48,6 @@ describe('TEST POST /components endpoint', () => {
             .post('/components')
             .send(component)
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(400);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
@@ -67,7 +64,6 @@ describe('TEST GET All /components endpoint', () => {
         return supertest(app)
             .get('/components')
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(200);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
@@ -93,7 +89,6 @@ describe('TEST GET BY ID /components/:id_component endpoint', () => {
         return supertest(app)
             .get(`/components/` + component.id)
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(200);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
@@ -111,7 +106,6 @@ describe('TEST GET BY ID /components/:id_component endpoint', () => {
         return supertest(app)
             .get('/components/900')
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(404);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
@@ -129,7 +123,6 @@ describe('TEST UPDATE /components/:id_component endpoint', () => {
             .put(`/components/` + component.id)
             .send({ description : "ini adalah lcd samsung original dengan kualitas terbaik"})
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(200);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
@@ -143,7 +136,6 @@ describe('TEST UPDATE /components/:id_component endpoint', () => {
         return supertest(app)
             .put('/components/900')
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(404);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
@@ -160,7 +152,6 @@ describe('TEST DELETE /components/:id_component endpoint', () => {
         return supertest(app)
             .delete(`/components/` + component.id)
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(200);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
@@ -174,7 +165,6 @@ describe('TEST DELETE /components/:id_component endpoint', () => {
         return supertest(app)
             .delete('/components/900')
             .then(res => {
-                console.log(res.body);
                 expect(res.statusCode).toBe(404);
                 expect(res.body).toHaveProperty('status');
                 expect(res.body).toHaveProperty('message');
