@@ -3,11 +3,16 @@ module.exports = {
 
     getAll : async (req,res,next) => {
         try {
-            const products = await product.findAll();
+            const products = await product.findAll({
+                attributes: {
+                  exclude: ["createdAt", "updatedAt"],
+                },
+                order: [["id", "ASC"]],
+              });
     
             return res.status(200).json({
                 status : true,
-                message: "succes",
+                message: "Get All products succes",
                 data : products
             })
         } catch (err) {
@@ -18,22 +23,25 @@ module.exports = {
     getById : async (req,res,next) => {
         try {
             const product_id = req.params.id_product
-            const products = await product.findOne({where: {id: product_id}});
+            const products = await product.findOne({
+                where: {id: product_id},
+                attributes: {
+                  exclude: ["createdAt", "updatedAt"],
+                },
+                order: [["id", "ASC"]],
+              });
     
             if(!products){
                 return res.status(404).json({
                     status : false,
-                    message: `cannot get product with product id ${product_id}`
+                    message: `cannot get product with product id not found`
                 });
             }
     
             return res.status(200).json({
                 status : true,
-                message: "succes",
-                data : {
-                    name : products.name,
-                    quantity: products.quantity
-                }
+                message: "Get By Id products succes",
+                data : products
             });
     
         } catch (err) {
@@ -60,12 +68,13 @@ module.exports = {
                 })
             }
     
-            const products = await product.create({name,quantity})
+            const products = await product.create({name, quantity})
             
             return res.status(201).json({
                 status : true,
-                message: "succes",
+                message: "created product succes",
                 data : {
+                    id: products.id,
                     name : products.name,
                     quantity: products.quantity
                 }
@@ -84,12 +93,12 @@ module.exports = {
             if(!update[0]){
                 return res.status(404).json({
                     status : false,
-                    message: `cannot update product with product id ${product_id}`
+                    message: `cannot update product with product id not found`
                 });
             }
             return res.status(200).json({
                 status : true,
-                message: "succes"
+                message: "updated succes"
             });
         } catch (err) {
             next(err)
@@ -105,7 +114,7 @@ module.exports = {
             if(!deleted){
                 return res.status(404).json({
                     status : false,
-                    message: `cannot delete product with product id ${product_id}`
+                    message: `cannot delete product with product id not found`,
                 });
             }
             return res.status(200).json({

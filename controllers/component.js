@@ -3,11 +3,16 @@ module.exports = {
 
     getAll : async (req,res,next) => {
         try {
-            const components = await component.findAll();
+            const components = await component.findAll({
+                attributes: {
+                  exclude: ["createdAt", "updatedAt"],
+                },
+                order: [["id", "ASC"]],
+              });
     
             return res.status(200).json({
                 status : true,
-                message: "succes",
+                message: "Get All Components succes",
                 data : components
             })
         } catch (err) {
@@ -18,22 +23,25 @@ module.exports = {
     getById : async (req,res,next) => {
         try {
             const component_id = req.params.id_component
-            const components = await component.findOne({where: {id: component_id}});
+            const components = await component.findOne({
+                where: {id: component_id},
+                attributes: {
+                  exclude: ["createdAt", "updatedAt"],
+                },
+                order: [["id", "ASC"]],
+              });
     
             if(!components){
                 return res.status(404).json({
                     status : false,
-                    message: `cannot get component with component id ${component_id}`
+                    message: `cannot get component with component id not found`
                 });
             }
     
             return res.status(200).json({
                 status : true,
-                message: "succes",
-                data : {
-                    name : components.name,
-                    description: components.description
-                }
+                message: "Get By Id Components succes",
+                data : components
             });
     
         } catch (err) {
@@ -64,8 +72,9 @@ module.exports = {
             
             return res.status(201).json({
                 status : true,
-                message: "succes",
+                message: "created component succes",
                 data : {
+                    id: components.id,
                     name : components.name,
                     description: components.description
                 }
@@ -84,12 +93,12 @@ module.exports = {
             if(!update[0]){
                 return res.status(404).json({
                     status : false,
-                    message: `cannot update component with component id ${component_id}`
+                    message: `cannot update component with component id not found`
                 });
             }
             return res.status(200).json({
                 status : true,
-                message: "succes"
+                message: "updated succes"
             });
         } catch (err) {
             next(err)
@@ -105,7 +114,7 @@ module.exports = {
             if(!deleted){
                 return res.status(404).json({
                     status : false,
-                    message: `cannot delete component with component id ${component_id}`,
+                    message: `cannot delete component with component id not found`,
                 });
             }
             return res.status(200).json({
