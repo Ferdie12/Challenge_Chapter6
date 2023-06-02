@@ -1,4 +1,6 @@
+require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const Sentry = require('@sentry/node');
 const morgan = require('morgan');
 const ui = require("swagger-ui-express");
@@ -24,9 +26,11 @@ Sentry.init({
     tracesSampleRate: 1.0,
   });
 
-app.use('/api-docs', ui.serve, ui.setup(fileku))
+app.use('/api-docs', ui.serve, ui.setup(fileku));
+app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(express.urlencoded({extended: true}))
 app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
 app.use(router);
