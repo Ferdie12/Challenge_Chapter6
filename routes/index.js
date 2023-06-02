@@ -13,7 +13,7 @@ router.use(routerUser);
 
 router.get('/', (req,res) => {
     res.status(200).json({
-        message: "welcome to Challenge ferdie in production"
+        message: "welcome to Challenge ferdie in develoop"
     })
 })
 
