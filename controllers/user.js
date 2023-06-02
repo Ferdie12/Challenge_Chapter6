@@ -226,7 +226,9 @@ module.exports = {
         return res.status(201).json({
             status: true,
             message: 'success',
-            data: null
+            data: {
+                url_image:uploadFile.url
+            }
         });
     }
 };
