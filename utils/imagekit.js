@@ -1,5 +1,5 @@
 
-var ImageKit = require('imagekit');
+const ImageKit = require('imagekit');
 
 const {
     PUBLIC_KEY_IMAGEKIT,
@@ -7,8 +7,9 @@ const {
     URL_IMAGEKIT
 } = process.env;
 
-module.exports = new ImageKit({
+const imagekit = new ImageKit({
     publicKey: PUBLIC_KEY_IMAGEKIT,
     privateKey: PRIVATE_KEY_IMAGEKIT,
     urlEndpoint: URL_IMAGEKIT
 });
+module.exports = imagekit;
