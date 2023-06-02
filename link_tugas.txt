@@ -1,1 +1,3 @@
 DEV : https://challengechapter6-develop.up.railway.app/
+
+PROD : https://challengechapter6-production.up.railway.app
